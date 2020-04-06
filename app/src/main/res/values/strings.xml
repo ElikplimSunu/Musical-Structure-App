@@ -1,0 +1,18 @@
+<resources>
+	<string name="app_name">Musical Structure App</string>
+
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+
+	<!-- Category name for albums [CHAR LIMIT=20] -->
+	<string name="albums">Albums</string>
+
+	<!-- Category name for artists [CHAR LIMIT=20] -->
+	<string name="artists">Artists</string>
+
+	<!-- Category name for genre [CHAR LIMIT=20] -->
+	<string name="genre">Genre</string>
+
+	<!-- Category name for songs [CHAR LIMIT=20] -->
+	<string name="songs">Songs</string>
+</resources>
