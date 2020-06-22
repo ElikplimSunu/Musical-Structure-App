@@ -3,20 +3,20 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/frags_background"
 	android:orientation="vertical"
 	tools:context="com.android.sunuerico.musicalstructureapp.MainActivity">
 
 
-<com.google.android.material.tabs.TabLayout
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:id="@+id/tabs"/>
-
+	<com.google.android.material.tabs.TabLayout
+		android:id="@+id/tabs"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
 
 
 	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/viewpager"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/viewpager"/>
+		android:layout_height="match_parent" />
 
 </LinearLayout>

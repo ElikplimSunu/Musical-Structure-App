@@ -15,4 +15,5 @@
 
 	<!-- Category name for songs [CHAR LIMIT=20] -->
 	<string name="songs">Songs</string>
+
 </resources>

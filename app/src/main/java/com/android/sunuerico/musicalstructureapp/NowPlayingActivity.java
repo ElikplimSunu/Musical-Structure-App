@@ -1,83 +1,115 @@
 package com.android.sunuerico.musicalstructureapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class NowPlayingActivity extends AppCompatActivity {
 	private MediaPlayer mediaPlayer;
 
+
+	private AudioManager audioManager;
+	AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+		@Override
+		public void onAudioFocusChange(int focusChange) {
+			if ((focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
+					focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) && mediaPlayer != null) {
+				mediaPlayer.pause();
+			} else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+				mediaPlayer.start();
+			} else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+				releaseMediaPlayer();
+			}
+		}
+	};
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
 
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.now_playing);
 
-		//I tried using the Parcelable interface to pass the Music information from the Song list to the
-		//Now playing but it never worked and I simply gave up. Trust me I spent an entire week on this feature
-		//and I was running out of time to submit. I am very sorry I let you down mentor :(
-//		Intent intent = getIntent();
-//
-//		Music songItem = intent.getParcelableExtra("Music");
-//
-//		String songName = songItem.getmSongName();
-//		String artistName = songItem.getmArtistName();
-//		String albumName = songItem.getmAlbumName();
-//		int audioResource = songItem.getmAudioResourceId();
-//		int imageResource = songItem.getmImageResourceId();
-//
-//		TextView songTextView = findViewById(R.id.song_text_view);
-//songTextView.setText(songName);
-//
-//		TextView artistTextView = findViewById(R.id.artist_text_view);
-//		artistTextView.setText(artistName);
-//
-//		TextView albumTextView = findViewById(R.id.album_text_view);
-//		albumTextView.setText(albumName);
-//
-//		ImageView songImageView = findViewById(R.id.song_image);
-//		songImageView.setImageResource(imageResource);
+		//getting data from the parcel
+		Intent intent = getIntent();
+		Music songItem = intent.getParcelableExtra("SongItem");
+
+		String songName = songItem.getmSongName();
+		String artistName = songItem.getmArtistName();
+		String albumName = songItem.getmAlbumName();
+		int imageResource = songItem.getmImageResourceId();
+		final int audioRes = songItem.getmAudioResourceId();
+
+		TextView songTextView = findViewById(R.id.song_text_view);
+		songTextView.setText(songName);
+
+		TextView artistTextView = findViewById(R.id.artist_text_view);
+		artistTextView.setText(artistName);
+
+		TextView albumTextView = findViewById(R.id.album_text_view);
+		albumTextView.setText(albumName);
+
+		ImageView songImageView = findViewById(R.id.song_image);
+		songImageView.setImageResource(imageResource);
 
 
-
-
-
-
+		//reference to the icon
 		final ImageView playIcon = findViewById(R.id.playIcon);
+
+		final ImageView pauseIcon = findViewById(R.id.pauseIcon);
+
+		final ImageView stopIcon = findViewById(R.id.stopIcon);
 
 
 		playIcon.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mediaPlayer == null) {
-					releaseMediaPlayer();
-					mediaPlayer = MediaPlayer.create(NowPlayingActivity.this, R.raw.wild_one);
 
+				int result = audioManager.requestAudioFocus(onAudioFocusChangeListener,
+						AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+				if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
+					if (mediaPlayer == null) {
+
+						mediaPlayer = MediaPlayer.create(NowPlayingActivity.this, audioRes);
+
+					}
 					mediaPlayer.start();
-					playIcon.setImageResource(R.drawable.ic_pause_black_24dp);
-				} else if (mediaPlayer.isPlaying()) {
-					mediaPlayer.pause();
-					releaseMediaPlayer();
-					playIcon.setImageResource(R.drawable.ic_play_arrow_black_24dp);
 				}
 
-//				mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//					@Override
-//					public void onCompletion(MediaPlayer mp) {
-//						Toast.makeText(NowPlayingActivity.this, "Song is done playing",Toast.LENGTH_SHORT).show();
-//
-//					}
-//				});
 			}
 
+		});
+
+		pauseIcon.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mediaPlayer != null) {
+
+					mediaPlayer.pause();
+				} else if(mediaPlayer == null){
+					releaseMediaPlayer();
+
+				}
+			}
+		});
+
+		stopIcon.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				releaseMediaPlayer();
+			}
 		});
 
 	}
@@ -101,7 +133,7 @@ public class NowPlayingActivity extends AppCompatActivity {
 		}
 	}
 
-//So that the music stop when you close the activity
+	//So that the music stop when you close the activity
 	@Override
 	protected void onStop() {
 		super.onStop();

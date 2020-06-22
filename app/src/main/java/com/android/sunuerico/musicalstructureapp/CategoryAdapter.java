@@ -10,15 +10,17 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class CategoryAdapter extends FragmentPagerAdapter {
 
-	/** Context of the app */
+	/**
+	 * Context of the app
+	 */
 	private Context mContext;
 
 	/**
 	 * Create a new {@link CategoryAdapter} object.
 	 *
 	 * @param context is the context of the app
-	 * @param fm is the fragment manager that will keep each fragment's state in the adapter
-	 *           across swipes.
+	 * @param fm      is the fragment manager that will keep each fragment's state in the adapter
+	 *                across swipes.
 	 */
 	public CategoryAdapter(Context context, @NonNull FragmentManager fm) {
 		super(fm);
@@ -29,7 +31,7 @@ public class CategoryAdapter extends FragmentPagerAdapter {
 	@NonNull
 	@Override
 	public Fragment getItem(int position) {
-		switch (position){
+		switch (position) {
 			case 0:
 				return new AlbumFragment();
 			case 1:
@@ -46,7 +48,7 @@ public class CategoryAdapter extends FragmentPagerAdapter {
 	@Nullable
 	@Override
 	public CharSequence getPageTitle(int position) {
-		switch (position){
+		switch (position) {
 			case 0:
 				return mContext.getString(R.string.albums);
 			case 1:

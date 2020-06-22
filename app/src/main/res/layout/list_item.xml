@@ -1,75 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="horizontal"
-	tools:context=".SongsActivity"
-	android:layout_margin="4dp">
+	android:layout_height="wrap_content"
+	android:layout_margin="@dimen/griditem_cardview_radius"
+	android:drawSelectorOnTop="true"
+	android:padding="@dimen/griditem_cardview_radius"
+	app:cardCornerRadius="@dimen/griditem_cardview_radius">
 
-	<androidx.cardview.widget.CardView
+	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:cardCornerRadius="100dp"
-		android:layout_margin="4dp">
+		android:orientation="horizontal"
+		android:padding="@dimen/griditem_cardview_radius">
 
-	<ImageView
-		android:id="@+id/song_image"
-		android:layout_width="80dp"
-		android:layout_height="80dp"
-		android:src="@drawable/quiz5" />
-	</androidx.cardview.widget.CardView>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/text_container"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		<androidx.cardview.widget.CardView
 
-		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
-			android:layout_marginStart="8dp">
+			android:background="@color/card_view_background"
+			app:cardCornerRadius="@dimen/cardview_margin_top">
 
-		<TextView
-			android:id="@+id/song_text_view"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textSize="16sp"
-			android:textColor="#000000"
-			/>
+			<ImageView
+				android:id="@+id/song_image"
+				android:layout_width="@dimen/listitem_image"
+				android:layout_height="@dimen/listitem_image" />
+		</androidx.cardview.widget.CardView>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/text_container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:drawSelectorOnTop="true">
 
 			<LinearLayout
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:orientation="horizontal">
+				android:layout_marginStart="@dimen/griditem_cardview_radius"
+				android:orientation="vertical"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
 
-		<TextView
-			android:id="@+id/artist_text_view"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+				<TextView
+					android:id="@+id/song_text_view"
+					style="@style/ArtistTextView" />
 
-		<TextView
-			android:id="@+id/divider"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text=" || " />
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/artist_text_view"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" />
+
+					<TextView
+						android:id="@+id/album_text_view"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/album_text_size" />
+
+					<TextView
+						android:id="@+id/divider"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text=" || " />
 
 
-		<TextView
-			android:id="@+id/song_time"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+					<TextView
+						android:id="@+id/song_time"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" />
+				</LinearLayout>
+
+
 			</LinearLayout>
 
 
-		</LinearLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
+	</LinearLayout>
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

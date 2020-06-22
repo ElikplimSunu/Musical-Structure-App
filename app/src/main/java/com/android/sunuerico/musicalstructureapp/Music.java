@@ -6,88 +6,67 @@ import android.os.Parcelable;
 public class Music implements Parcelable {
 
 	//The artist's name
-	private String mArtistName ;
+	private String mArtistName;
 
 	//the album's name
-	private String mAlbumName = NO_ALBUM_NAME_PROVIDED;
-
-//the genre of the song
-	private String mGenreName;
+	private String mAlbumName;
 
 	//the name of the song
 	private String mSongName;
 
+	//the artist or album or genre name
+	private String mArtistAlbumGenre;
+
 	//The image displayed for each category
-	private  int mImageResourceId;
+	private int mImageResourceId;
 
 	//The song to be played
-	private  int mAudioResourceId;
+	private int mAudioResourceId;
 
 	//The duration if the song
 	private String mSongTime;
 
-	//When displaying the ArtistActivity
-	public static final String NO_ALBUM_NAME_PROVIDED = "";
 
+	//Constructor album, artist, genre tabs
+	public Music(String artistAlbumGenre, int imageResourceId, int audioResourceId) {
 
-
-
-
-
-	//Constructor for Album Activity
-	public Music( String artistName, String albumName, int imageResourceId, int audioResourceId){
-
-		mAlbumName = albumName;
-		mArtistName = artistName;
+		mArtistAlbumGenre = artistAlbumGenre;
 		mImageResourceId = imageResourceId;
 		mAudioResourceId = audioResourceId;
 
 	}
-//Constructor for All the classes
-	public Music( String artistName, String albumName, int imageResourceId, String genreName, int audioResourceId){
-
-		mAlbumName = albumName;
-		mArtistName = artistName;
-		mImageResourceId = imageResourceId;
-		mGenreName = genreName;
-		mAudioResourceId = audioResourceId;
-
-	}
 
 
-	public Music( String artistName, String songName, String songTime, int imageResourceId, int audioResourceId){
+	//Contructor for song list
+	public Music(String artistName, String songName, String songTime, String albumName, int imageResourceId, int audioResourceId) {
 
 		mArtistName = artistName;
 
-		this.mSongName = songName;
+		mSongName = songName;
+
 		mSongTime = songTime;
 
 		mImageResourceId = imageResourceId;
 
 		mAudioResourceId = audioResourceId;
 
-	}
-
-	public Music( String artistName, int imageResourceId){
-
-		mArtistName = artistName;
-
-
-		mImageResourceId = imageResourceId;
+		mAlbumName = albumName;
 
 	}
 
 
 	protected Music(Parcel in) {
+		mArtistAlbumGenre = in.readString();
 		mArtistName = in.readString();
 		mAlbumName = in.readString();
-		mGenreName = in.readString();
 		mSongName = in.readString();
 		mImageResourceId = in.readInt();
 		mAudioResourceId = in.readInt();
 		mSongTime = in.readString();
 	}
 
+
+	//The creator for the Parcleable
 	public static final Creator<Music> CREATOR = new Creator<Music>() {
 		@Override
 		public Music createFromParcel(Parcel in) {
@@ -101,8 +80,8 @@ public class Music implements Parcelable {
 	};
 
 	/***
- * Get the artist's name
- */
+	 * Get the artist's name
+	 */
 	public String getmArtistName() {
 		return mArtistName;
 	}
@@ -137,19 +116,20 @@ public class Music implements Parcelable {
 		return mAudioResourceId;
 	}
 
-	public int getmImageResourceId() {
-		return mImageResourceId;
-	}
-
-	public boolean hasAlbumName(){
-		return !(mAlbumName.equals(NO_ALBUM_NAME_PROVIDED));
-	}
 
 	/***
 	 * Get the song
 	 */
+	public int getmImageResourceId() {
+		return mImageResourceId;
+	}
 
-
+	/***
+	 * Get the artist name or album name or genre name
+	 */
+	public String getmArtistAlbumGenre() {
+		return mArtistAlbumGenre;
+	}
 
 	@Override
 	public int describeContents() {
@@ -158,9 +138,9 @@ public class Music implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(mArtistAlbumGenre);
 		dest.writeString(mArtistName);
 		dest.writeString(mAlbumName);
-		dest.writeString(mGenreName);
 		dest.writeString(mSongName);
 		dest.writeInt(mImageResourceId);
 		dest.writeInt(mAudioResourceId);

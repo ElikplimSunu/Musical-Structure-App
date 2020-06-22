@@ -1,15 +1,8 @@
 package com.android.sunuerico.musicalstructureapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SongsActivity extends AppCompatActivity {
 
@@ -21,10 +14,7 @@ public class SongsActivity extends AppCompatActivity {
 				.replace(R.id.container_of_layout, new SongsFragment())
 				.commit();
 
-		}
-
-
-
+	}
 
 
 }

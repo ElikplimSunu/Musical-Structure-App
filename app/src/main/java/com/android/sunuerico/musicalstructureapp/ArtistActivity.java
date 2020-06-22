@@ -1,15 +1,8 @@
 package com.android.sunuerico.musicalstructureapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ArtistActivity extends AppCompatActivity {
 
@@ -21,5 +14,5 @@ public class ArtistActivity extends AppCompatActivity {
 				.replace(R.id.container_of_layout, new ArtistFragment())
 				.commit();
 	}
-	}
+}
 
